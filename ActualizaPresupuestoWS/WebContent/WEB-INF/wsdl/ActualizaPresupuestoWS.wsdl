@@ -1,0 +1,123 @@
+<definitions targetNamespace="http://company.com.pe/eai/ws/actualizapresupuesto"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://company.com.pe/eai/ws/actualizapresupuesto"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             name="ActualizaPresupuestoWS">
+         
+  <types>
+    <xsd:schema targetNamespace="http://company.com.pe/eai/ws/actualizapresupuesto" elementFormDefault="qualified">
+	<xsd:complexType name="AuditType">
+		<xsd:sequence>
+		<xsd:element name="idTransaccion" type="xsd:string"></xsd:element>
+		<xsd:element name="ipApplicacion" type="xsd:string"></xsd:element>
+		<xsd:element name="nombreAplicacion" type="xsd:string"></xsd:element>
+		<xsd:element name="usuarioAplicacion" type="xsd:string"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AuditResponseType">
+		<xsd:sequence>
+		<xsd:element name="idTransaccion" type="xsd:string"></xsd:element>
+		<xsd:element name="codigoRespuesta" type="xsd:string"/>
+		<xsd:element name="mensajeRespuesta" type="xsd:string"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>	
+      <xsd:element name="actualizarPresupuestoRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+		    <xsd:element name="auditRequest" type="tns:AuditType"/>
+            <xsd:element name="idAgrupador" type="xsd:string"/>
+            <xsd:element name="reservaGenerada" type="xsd:string"/>
+            <xsd:element name="contratoMarco" type="xsd:string"/>
+            <xsd:element name="docContabiliza" type="xsd:string"/>
+            <xsd:element name="mensajeSap" type="xsd:string"/>
+			<xsd:element name="listaRequestOpcional" type="tns:ParametrosRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="actualizarPresupuestoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="auditResponse" type="tns:AuditResponseType"/>
+            <xsd:element name="avSalida" type="xsd:string"/>
+			<xsd:element name="listaResponseOpcional" type="tns:ParametrosResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+	<xsd:complexType name="ParametrosRequest">
+		<xsd:sequence>
+			<xsd:element name="objetoRequestOpcional" maxOccurs="unbounded"	minOccurs="1">
+				<xsd:complexType>
+					<xsd:attribute name="campo" type="xsd:string" />
+					<xsd:attribute name="valor" type="xsd:string" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="ParametrosResponse">
+		<xsd:sequence>
+			<xsd:element name="ObjetoResponseOpcional" maxOccurs="unbounded" minOccurs="1">
+				<xsd:complexType>
+					<xsd:attribute name="campo" type="xsd:string" />
+					<xsd:attribute name="valor" type="xsd:string" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+    </xsd:schema>
+  </types>
+  
+  <message name="actualizarPresupuestoMsgRequest">
+    <part name="paremetersRequest" element="tns:actualizarPresupuestoRequest"/>
+  </message>
+  <message name="actualizarPresupuestoMsgResponse">
+    <part name="parametersResponse" element="tns:actualizarPresupuestoResponse"/>
+  </message>
+  
+  <portType name="ActualizaPresupuestoWSPortType">
+    <operation name="actualizarPresupuesto">
+      <input message="tns:actualizarPresupuestoMsgRequest"/>
+      <output message="tns:actualizarPresupuestoMsgResponse"/>
+    </operation>
+  </portType>
+  <binding name="ActualizaPresupuestoWSPortTypeSOAP11Binding" type="tns:ActualizaPresupuestoWSPortType">
+    <soap:binding style="document"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="actualizarPresupuesto">
+      <soap:operation style="document"
+                      soapAction="http://company.com.pe/eai/ws/actualizapresupuesto/actualizarPresupuesto"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="ActualizaPresupuestoWSPortTypeSOAP12Binding" type="tns:ActualizaPresupuestoWSPortType">
+    <soap12:binding style="document"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="actualizarPresupuesto">
+      <soap12:operation style="document"
+                      soapAction="http://company.com.pe/eai/ws/actualizapresupuesto/actualizarPresupuesto"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ActualizaPresupuesto">
+    <port name="ActualizaPresupuestoSB11" binding="tns:ActualizaPresupuestoWSPortTypeSOAP11Binding">
+      <soap:address location="http://localhost/ActualizaPresupuesto/ActualizaPresupuestoWS"/>
+    </port>
+	<port name="ActualizaPresupuestoSB12" binding="tns:ActualizaPresupuestoWSPortTypeSOAP12Binding">
+      <soap12:address location="http://localhost/ActualizaPresupuesto/ActualizaPresupuestoWS"/>
+    </port>
+  </service>
+</definitions>
+

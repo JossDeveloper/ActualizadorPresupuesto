@@ -1,0 +1,4 @@
+Web Service desarrollado en lenguaje de programacion Java, tiene como función realizar una actualizacion de presupuesto en una BD, para lo cual recibe la informacion como una cadena de texto en el input del servicio.
+
+Precisa de instalación en un servidor de aplicaciones y la utilizacion de las librerias correspondientes de Spring.
+
